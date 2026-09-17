@@ -1,0 +1,4 @@
+interface:
+  display_name: "Discovery Loop"
+  short_description: "Choose when to audit, deepen, transfer, or stop"
+  default_prompt: "Use $discovery-loop to investigate why this algorithm has plateaued."

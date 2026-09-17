@@ -1,0 +1,4 @@
+interface:
+  display_name: "Structural Transfer"
+  short_description: "Map distant mechanisms into falsifiable interventions"
+  default_prompt: "Use $structural-transfer to find mechanisms beyond the immediate literature."

@@ -1,0 +1,159 @@
+version: 1
+cases:
+- id: support-speed
+  domain: product
+  skill: objective-audit
+  prompt: Support agents are rewarded for closing tickets in one hour. Closure improves,
+    but repeat contacts rise. The goal is durable resolution. What should we optimize
+    next?
+  expected_route: audit
+  must_include:
+  - Distinguish closure from resolution; measure repeat contact on all assigned tickets
+    over a fixed horizon.
+  must_avoid:
+  - Assume faster closure proves better support.
+- id: quadratic-stall
+  domain: algorithms
+  skill: research-deepener
+  prompt: A convex quadratic solver stalls. The objective is the exact required loss.
+    Hessian condition number is 1000000; fixed-step gradient descent passes gradient
+    checks. Should we replace the objective?
+  expected_route: deepen
+  must_include:
+  - Retain objective; test conditioning with a small known optimum and preconditioned
+    baseline.
+  must_avoid:
+  - Pivot to a different objective without evidence.
+- id: broken-manipulation
+  domain: science
+  skill: research-deepener
+  prompt: Three implementations of a proposed enzyme assay mechanism show no gain.
+    All use the same reporter; a positive control also produces no signal. Is the
+    mechanism dead?
+  expected_route: deepen
+  must_include:
+  - Repair or validate the reporter before mechanism verdict; bound further attempts.
+  must_avoid:
+  - Count correlated invalid tests as independent refutations.
+- id: clickbait
+  domain: recommendation
+  skill: objective-audit
+  prompt: Click-through increased while users report regret and hide more recommendations.
+    The stated goal is useful discovery. Propose one discriminating test.
+  expected_route: audit
+  must_include:
+  - Compare click gain to independently measured usefulness and regret, with position
+    exposure controlled.
+  must_avoid:
+  - Optimize click-through alone.
+- id: retry-waves
+  domain: distributed systems
+  skill: structural-transfer
+  prompt: Synchronized client retries overload a shared service. Load instrumentation
+    is verified; faster servers and fixed delays only move the bursts. Find a distant
+    mechanism for breaking synchronization.
+  expected_route: transfer
+  must_include:
+  - Map symmetry breaking or randomized contention to independent retry timing; predict
+    reduced temporal correlation under equal load.
+  must_avoid:
+  - Offer a metaphor with no timing intervention.
+- id: routine-sort
+  domain: software
+  skill: discovery-loop
+  prompt: 'Sort this list ascending: [9, 2, 5]. Return only the sorted list.'
+  expected_route: execute
+  must_include:
+  - Return [2, 5, 9] without research framing.
+  must_avoid:
+  - Audit objectives or search distant domains.
+- id: invalid-ecosystem
+  domain: security
+  skill: structural-transfer
+  prompt: We want to use ecological diversity to restore bits permanently erased from
+    a lone disk with no redundancy, backup, or external information. Does this analogy
+    justify a recovery method?
+  expected_route: reject
+  must_include:
+  - Identify missing redundant information and reject the analogy as a recovery guarantee.
+  must_avoid:
+  - Claim diversity recreates absent information.
+- id: valid-refutation
+  domain: science
+  skill: research-deepener
+  prompt: Two independent calibrated assays verify the proposed mediator changed.
+    Both exclude the preregistered minimum useful outcome gain; the kill rule required
+    those two results. Keep trying variants?
+  expected_route: stop
+  must_include:
+  - Honor the kill rule for the tested scope while distinguishing zero effect from
+    insufficient useful effect.
+  must_avoid:
+  - Protect the hypothesis by changing thresholds post hoc.
+- id: censored-latency
+  domain: operations
+  skill: objective-audit
+  prompt: Mean completed-request latency improved after adding a timeout; 20 percent
+    of requests now time out and disappear from the report. Is service better?
+  expected_route: audit
+  must_include:
+  - Include timeouts in the denominator and evaluate success plus latency by cohort.
+  must_avoid:
+  - Treat censored mean as service improvement.
+- id: missing-state
+  domain: control
+  skill: discovery-loop
+  prompt: A controller receives identical observations for two hidden states that
+    require opposite actions. Tuning gains has failed. Sensor cost is constrained
+    but a one-bit diagnostic may be feasible. What next?
+  expected_route: diagnose
+  must_include:
+  - Test observability with an oracle or diagnostic bit before further tuning; respect
+    sensor cost.
+  must_avoid:
+  - Attribute failure solely to optimizer quality.
+- id: population-shift
+  domain: education
+  skill: objective-audit
+  prompt: A tutor improves quiz scores on advanced volunteers. It will deploy to beginners;
+    the goal is retained understanding after a month. Is the evaluation sufficient?
+  expected_route: audit
+  must_include:
+  - Separate evaluation population and short-term proxy from retained learning; propose
+    a beginner delayed test.
+  must_avoid:
+  - Generalize volunteer quiz gains without qualification.
+- id: assay-coding
+  domain: experimental design
+  skill: structural-transfer
+  prompt: A binary assay identifies one active item among 16. Each pooled measurement
+    costs the same and is noiseless; individual testing is too expensive. Seek a distant
+    structural mechanism.
+  expected_route: transfer
+  must_include:
+  - Map identifying hidden state through binary observations to distinct codewords;
+    test identifiability and state noise assumptions.
+  must_avoid:
+  - Assume coding fixes noisy multi-item assays without adapting the model.
+- id: uncertain-plateau
+  domain: optimization
+  skill: discovery-loop
+  prompt: Three runs differ by less than measurement noise. We have not checked convergence
+    or held-out evaluation. Should we abandon this approach for evolutionary biology
+    ideas?
+  expected_route: deepen
+  must_include:
+  - Improve evidence and convergence checks before declaring a structural plateau.
+  must_avoid:
+  - Equate a flat score with exhausted local progress.
+- id: competing-goals
+  domain: logistics
+  skill: objective-audit
+  prompt: Dispatch optimizes mean delivery time. It can improve that metric by abandoning
+    remote customers, but universal service is contractual. What diagnostic is useful?
+  expected_route: audit
+  must_include:
+  - Preserve coverage as a constraint; examine per-region completion and unconditional
+    delivery outcomes.
+  must_avoid:
+  - Silently discard universal service.

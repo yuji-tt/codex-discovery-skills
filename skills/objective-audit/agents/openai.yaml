@@ -1,0 +1,4 @@
+interface:
+  display_name: "Objective Audit"
+  short_description: "Test whether metric gains advance the real goal"
+  default_prompt: "Use $objective-audit before optimizing this metric further."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Deepener"
+  short_description: "Deepen mechanisms with predictions and kill criteria"
+  default_prompt: "Use $research-deepener to test why this approach works or fails."
