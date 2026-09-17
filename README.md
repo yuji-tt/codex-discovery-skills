@@ -30,7 +30,7 @@ The arrows are conditional. A clear routine task should not be turned into a res
 
 ## Installation
 
-In Codex, invoke the built-in installer with this request (after the repository is published):
+In Codex, invoke the built-in installer with this request:
 
 ```text
 Use $skill-installer to install from yuji-tt/codex-discovery-skills:
@@ -88,6 +88,8 @@ python evals/run.py prepare --out .eval-runs/prompts
 ```
 
 Run the prepared prompts in fresh Codex tasks, record outputs, and score them using the rubric. See the rubric for a paired baseline protocol and the aggregation command. CI validates repository integrity and harness behavior, not model performance.
+
+Maintainers can verify public installation of all four packages with `python scripts/smoke_install.py --ref main`. This uses the official installer in a disposable destination, validates the downloaded files against their public source commit, and cleans up afterward. See [installation verification](CONTRIBUTING.md#verify-public-installation-before-a-release) for release checks and optional official validation.
 
 ## Contributing
 
