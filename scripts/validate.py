@@ -10,13 +10,14 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 NAMES = {'objective-audit', 'research-deepener', 'structural-transfer', 'discovery-loop'}
 
-def validate(root):
+def validate(root, *, installed=False):
+    """Validate a checkout, or a directory containing only installed skill packages."""
     errors = []
     def require(ok, message):
         if not ok:
             errors.append(message)
     for name in sorted(NAMES):
-        folder = root / 'skills' / name
+        folder = (root if installed else root / 'skills') / name
         p = folder / 'SKILL.md'
         require(p.is_file(), f'Missing {p.relative_to(root)}')
         if not p.is_file():
@@ -52,6 +53,8 @@ def validate(root):
             if parsed.scheme or parsed.netloc or not parsed.path:
                 continue
             require((p.parent / unquote(parsed.path)).exists(), f'{p.relative_to(root)}: broken link {target}')
+    if installed:
+        return errors
     try:
         cases = yaml.safe_load((root / 'evals/cases.yaml').read_text(encoding='utf-8'))['cases']
         require(len(cases) >= 12, 'Need at least 12 cases')
@@ -70,18 +73,22 @@ def validate(root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--official-creator', type=Path)
+    parser.add_argument('--skills-dir', type=Path, help='Validate installed packages without requiring checkout-only files')
     args = parser.parse_args()
-    errors = validate(ROOT)
+    root = args.skills_dir.resolve() if args.skills_dir else ROOT
+    errors = validate(root, installed=args.skills_dir is not None)
     if args.official_creator:
         validator = args.official_creator / 'scripts/quick_validate.py'
         for name in sorted(NAMES):
-            result = subprocess.run([sys.executable, '-X', 'utf8', str(validator), str(ROOT / 'skills' / name)], check=False)
+            folder = (root if args.skills_dir else root / 'skills') / name
+            result = subprocess.run([sys.executable, '-X', 'utf8', str(validator), str(folder)], check=False)
             if result.returncode:
                 errors.append(f'{name}: official validation failed')
     if errors:
         print('\n'.join(errors), file=sys.stderr)
         return 1
-    print('PASS: four skills, UI metadata, frontmatter, placeholders, relative links, and evaluation cases')
+    scope = 'installed packages' if args.skills_dir else 'repository and evaluation cases'
+    print(f'PASS: four skills, UI metadata, frontmatter, placeholders, relative links; {scope}')
     return 0
 
 if __name__ == '__main__':
